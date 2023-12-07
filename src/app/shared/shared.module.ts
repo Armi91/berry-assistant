@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { CardModule } from "primeng/card";
+import { InputTextareaModule } from "primeng/inputtextarea";
 
 @NgModule({
   declarations: [],
@@ -15,6 +17,8 @@ import { PasswordModule } from 'primeng/password';
     InputTextModule,
     FormsModule,
     PasswordModule,
+    CardModule,
+    InputTextareaModule
   ],
   exports: [
     CommonModule,
@@ -23,6 +27,8 @@ import { PasswordModule } from 'primeng/password';
     InputTextModule,
     FormsModule,
     PasswordModule,
+    CardModule,
+    InputTextareaModule
   ],
 })
 export class SharedModule {}

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from '@angular/core';
 import { LayoutService } from '../services/layout.service';
+import { ChatService } from 'src/app/_services/chat.service';
 
 export interface MenuItem {
   label: string;
@@ -24,6 +25,11 @@ export class MenuComponent {
           icon: 'pi pi-fw pi-home',
           routerLink: '/',
         },
+        {
+          label: 'Nowy chat',
+          icon: 'pi pi-fw pi-plus',
+          command: () => this.chat.newChat(),
+        },
       ],
     },
     {
@@ -43,5 +49,5 @@ export class MenuComponent {
     },
   ];
 
-  constructor(protected layoutService: LayoutService) {}
+  constructor(protected layoutService: LayoutService, private chat: ChatService) {}
 }

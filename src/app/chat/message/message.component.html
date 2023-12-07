@@ -1,1 +1,9 @@
-<p>message works!</p>
+<div class="flex mb-3">
+  <div
+    class="w-2rem h-2rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0"
+  >
+    <i class="pi pi-dollar text-blue-500"></i>
+  </div>
+  <span class="text-900 line-height-4 font-bold">{{ message.role === 'user' ? 'Ty' : 'Assistant' }}</span>
+</div>
+<div class="flex pl-6">{{message.content}}</div>

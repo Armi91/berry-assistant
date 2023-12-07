@@ -1,1 +1,12 @@
-<p>chat works!</p>
+<div class="flex flex-column h-full justify-content-between">
+  <div class="flex-grow-1 mb-2">
+    <p-card [style]="{ height: '100%' }">
+      <app-message-list></app-message-list>
+    </p-card>
+  </div>
+  <div class="">
+    <p-card>
+      <app-prompt></app-prompt>
+    </p-card>
+  </div>
+</div>

@@ -1,1 +1,15 @@
-<p>prompt works!</p>
+<div class="flex">
+  <div class="col-12 lg:col-8 lg:col-offset-2">
+    <span class="p-input-icon-right w-full">
+      <textarea
+        class="w-full"
+        rows="5"
+        cols="30"
+        placeholder="Your Message"
+        pInputTextarea
+        [(ngModel)]="prompt"
+      ></textarea>
+      <i class="pi pi-send" (click)="send()" style="top: 80%"></i>
+    </span>
+  </div>
+</div>
