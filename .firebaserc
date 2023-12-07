@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "berry-assistant-f865d"
+  },
+  "targets": {
+    "berry-assistant-f865d": {
+      "hosting": {
+        "berry-assistant": [
+          "berry-assistant-f865d"
+        ]
+      }
+    }
+  }
+}
