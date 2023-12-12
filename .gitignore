@@ -52,3 +52,6 @@ functions/src/_secrets.ts
 /src/environments/
 /database
 functions/.env
+/functions/src/keys
+/public
+/functions/lib

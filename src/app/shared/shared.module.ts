@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { CardModule } from "primeng/card";
 import { InputTextareaModule } from "primeng/inputtextarea";
+import { ProgressSpinnerModule } from "primeng/progressspinner";
 
 @NgModule({
   declarations: [],
@@ -18,7 +19,8 @@ import { InputTextareaModule } from "primeng/inputtextarea";
     FormsModule,
     PasswordModule,
     CardModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ProgressSpinnerModule
   ],
   exports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { InputTextareaModule } from "primeng/inputtextarea";
     FormsModule,
     PasswordModule,
     CardModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ProgressSpinnerModule
   ],
 })
 export class SharedModule {}

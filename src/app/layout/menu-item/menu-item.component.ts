@@ -19,11 +19,18 @@ import { Subject, take, takeUntil } from 'rxjs';
 import { LayoutService } from '../services/layout.service';
 import { Router } from '@angular/router';
 import { MenuService } from '../services/menu.service';
+import { ChatService } from 'src/app/_services/chat.service';
 
 @Component({
   selector: '[app-menu-item]',
   templateUrl: './menu-item.component.html',
-  styles: [],
+  styles: [`
+  li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  `],
   animations: [
     trigger('children', [
       state(
@@ -63,7 +70,8 @@ export class MenuItemComponent implements OnInit, OnDestroy {
     protected layoutService: LayoutService,
     private cd: ChangeDetectorRef,
     public router: Router,
-    private menuService: MenuService
+    private menuService: MenuService,
+    protected chat: ChatService
   ) {
     this.menuService.menuSource$.pipe(take(1)).subscribe({
       next: value => {

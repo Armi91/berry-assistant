@@ -8,8 +8,10 @@
         placeholder="Your Message"
         pInputTextarea
         [(ngModel)]="prompt"
+        (keyup.enter)="send()"
       ></textarea>
-      <i class="pi pi-send" (click)="send()" style="top: 80%"></i>
+      <i *ngIf="!isSending" class="pi pi-send cursor-pointer" (click)="send()"></i>
+      <p-progressSpinner *ngIf="isSending" styleClass="w-1rem h-1rem" class="spinner" strokeWidth="8px"></p-progressSpinner>
     </span>
   </div>
 </div>

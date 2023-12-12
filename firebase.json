@@ -20,6 +20,7 @@
   ],
   "hosting": [
     {
+      "target": "berry-assistant",
       "public": "public",
       "ignore": [
         "firebase.json",

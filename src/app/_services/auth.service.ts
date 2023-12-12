@@ -5,11 +5,21 @@ import {
   authState,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
+  signOut,
 } from '@angular/fire/auth';
-import { DocumentData, Firestore, doc, docData, getDoc, setDoc } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable, map, of, switchMap, take } from 'rxjs';
+import {
+  DocumentData,
+  Firestore,
+  doc,
+  docData,
+  getDoc,
+  setDoc,
+} from '@angular/fire/firestore';
+import { Observable, of, switchMap } from 'rxjs';
 import { User } from '../_models/user';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +28,12 @@ export class AuthService {
   currentUser$: Observable<User | null> = of(null);
   authState$ = authState(this.auth);
 
-  constructor(private auth: Auth, private firestore: Firestore, private toastr: ToastrService) {
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore,
+    private toastr: ToastrService,
+    private router: Router
+  ) {
     this.currentUser$ = this.getCurrentUser();
   }
 
@@ -47,20 +62,21 @@ export class AuthService {
   async loginWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
+      // const userCreds = await signInWithRedirect(this.auth, provider)
       const userCreds = await signInWithPopup(this.auth, provider);
       const userDocRef = doc(this.firestore, `users/${userCreds.user?.uid}`);
       const userSnap = await getDoc(userDocRef);
-      if (userSnap.exists()) {
-        return;
-      } else {
+      if (!userSnap.exists()) {
         const user: User = {
           uid: userCreds.user?.uid,
           email: userCreds.user?.email || '',
           displayName: userCreds.user?.displayName || '',
+          photoURL: userCreds.user?.photoURL || '',
         };
-        setDoc(userDocRef, user);
+        await setDoc(userDocRef, user);
       }
-
+      console.log(userCreds.user?.uid)
+      this.router.navigate(['/u/chat']);
     } catch (error: any) {
       console.log(error);
       this.toastr.error(error.message);
@@ -69,6 +85,12 @@ export class AuthService {
 
   register(registerDto: any) {
     throw new Error('Method not implemented.');
+  }
+
+  signOut() {
+    signOut(this.auth).then(() => {
+      this.router.navigate(['/auth/login']);
+    });
   }
 
   setCurrentUser(uid: string) {

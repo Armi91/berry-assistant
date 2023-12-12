@@ -1,23 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { Message } from 'src/app/_models/chat';
 import { ChatService } from 'src/app/_services/chat.service';
 
 @Component({
   selector: 'app-message-list',
   templateUrl: './message-list.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class MessageListComponent {
+  @Input('scrollWindow') scrollWindow?: HTMLElement;
   chatId?: string;
   messages$: Observable<Message[] | undefined>;
 
   constructor(private route: ActivatedRoute, protected chat: ChatService) {
     this.messages$ = this.chat.currentChat$.pipe(
-      map(chat => chat?.messages)
-    )
-  }
+      map((chat) => chat?.messages),
+      tap(() => {
+        console.log(this.scrollWindow);
 
+        setTimeout(() => {
+          if (this.scrollWindow) {
+            this.scrollWindow.scrollTo({
+              top: this.scrollWindow.scrollHeight,
+              behavior: 'smooth',
+            });
+          }
+        }, 1);
+      })
+    );
+  }
 }

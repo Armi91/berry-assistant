@@ -6,8 +6,7 @@ import { ChatService } from 'src/app/_services/chat.service';
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
-  styles: [
-  ]
+  styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent {
   @Input('message') message!: Message;

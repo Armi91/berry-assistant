@@ -15,6 +15,7 @@
     <i
       class="pi pi-fw pi-angle-down layout-submenu-toggler"
       *ngIf="item.items"></i>
+    <i class="pi"></i>
   </a>
   <a
     *ngIf="item.routerLink && !item.items && item.visible !== false"
@@ -46,7 +47,7 @@
       class="pi pi-fw pi-angle-down layout-submenu-toggler"
       *ngIf="item.items"></i>
   </a>
-
+  <i *ngIf="item.isChat" class="pi pi-trash cursor-pointer" (click)="chat.deleteChat(item.chatId)"></i>
   <ul
     *ngIf="item.items && item.visible !== false"
     [@children]="submenuAnimation">

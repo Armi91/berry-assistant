@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TestingComponent } from './testing/testing.component';
 import { LayoutComponent } from './layout/layout.component';
+import { loggedInGuard } from './_guards/logged-in.guard';
 
 const routes: Routes = [
   {
@@ -12,6 +12,7 @@ const routes: Routes = [
   {
     path: 'u',
     component: LayoutComponent,
+    canActivate: [loggedInGuard],
     children: [
       {
         path: 'chat',

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Chat } from '../_models/chat';
@@ -10,7 +10,7 @@ import { ChatService } from '../_services/chat.service';
   styles: [`
     :host {
       display: block;
-      height: calc(100vh - 12rem);
+      height: calc(100vh - 9rem);
     }
   `]
 })
@@ -26,5 +26,7 @@ export class ChatComponent {
         }
       }
     })
+
+    this.chat.getModelsList();
   }
 }

@@ -6,4 +6,5 @@
   </div>
   <span class="text-900 line-height-4 font-bold">{{ message.role === 'user' ? 'Ty' : 'Assistant' }}</span>
 </div>
-<div class="flex pl-6">{{message.content}}</div>
+<div class="flex pl-6 flex-column message" markdown clipboard>{{message.content}}</div>
+

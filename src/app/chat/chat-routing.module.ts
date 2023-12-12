@@ -4,6 +4,10 @@ import { ChatComponent } from './chat.component';
 
 const routes: Routes = [
   {
+    path: '',
+    component: ChatComponent
+  },
+  {
     path: ':chatId',
     component: ChatComponent
   }

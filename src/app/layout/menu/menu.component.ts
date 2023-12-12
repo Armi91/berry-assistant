@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { LayoutService } from '../services/layout.service';
 import { ChatService } from 'src/app/_services/chat.service';
+import { Timestamp } from '@angular/fire/firestore';
 
 export interface MenuItem {
   label: string;
@@ -13,41 +14,57 @@ export interface MenuItem {
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styles: [],
+  styles: [`
+
+  `],
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
   model: any[] = [
     {
-      label: 'Home',
+      label: 'Nowy czat',
       items: [
         {
-          label: 'Dashboard',
-          icon: 'pi pi-fw pi-home',
-          routerLink: '/',
+          label: 'GPT-3.5',
+          icon: 'pi pi-fw pi-plus',
+          command: () => this.chat.newChat('gpt-3.5-turbo'),
         },
         {
-          label: 'Nowy chat',
+          label: 'GPT-4',
           icon: 'pi pi-fw pi-plus',
-          command: () => this.chat.newChat(),
+          command: () => this.chat.newChat('gpt-4'),
         },
       ],
     },
     {
-      label: 'Chaty',
+      label: 'Czaty',
       items: [
-        {
-          label: 'Lista',
-          icon: 'pi pi-fw pi-list',
-          routerLink: '/u/vision/list',
-        },
-        {
-          label: 'Szablony',
-          icon: 'pi pi-fw pi-book',
-          routerLink: '/u/vision/templates',
-        },
       ],
     },
   ];
 
-  constructor(protected layoutService: LayoutService, private chat: ChatService) {}
+  constructor(
+    protected layoutService: LayoutService,
+    private chat: ChatService,
+    private cd: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.chat.getChatsList().subscribe({
+      next: (chats) => {
+        const chatsHistory: any[] = [];
+        chats.forEach((chatData) => {
+          chatsHistory.push({
+            label: chatData['name'],
+            icon: 'pi pi-fw pi-comments',
+            routerLink: `/u/chat/${chatData['chatId']}`,
+            isChat: true,
+            chatId: chatData['chatId'],
+            createdAt: chatData['createdAt'],
+          });
+        });
+        this.model[1].items = chatsHistory;
+        // this.cd.detectChanges();
+      },
+    });
+  }
 }

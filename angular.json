@@ -53,17 +53,24 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/prismjs/themes/prism-okaidia.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/marked/marked.min.js",
+              "node_modules/clipboard/dist/clipboard.min.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-csharp.min.js",
+              "node_modules/prismjs/components/prism-css.min.js"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -136,7 +143,7 @@
           "builder": "@angular/fire:deploy",
           "options": {
             "version": 2,
-            "browserTarget": "berry-assistant:build:production"
+            "browserTarget": "berry-assistant:build:development"
           }
         }
       }

@@ -10,3 +10,21 @@ $gutter: 1rem; //for primeflex grid system
 
 // ngx-spinner
 // @import "../node_modules/ngx-spinner/animations/ball-fussion.css";
+
+.message {
+  ul {
+    margin-bottom: $gutter;
+    li:nth-last-child {
+      margin-bottom: $gutter;
+    }
+  }
+  ol {
+    margin-bottom: $gutter;
+    li:nth-last-child {
+      margin-bottom: $gutter;
+    }
+  }
+  pre {
+    margin-bottom: $gutter;
+  }
+}

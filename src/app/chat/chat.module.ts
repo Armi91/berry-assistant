@@ -7,6 +7,7 @@ import { PromptComponent } from './prompt/prompt.component';
 import { MessageListComponent } from './message-list/message-list.component';
 import { MessageComponent } from './message/message.component';
 import { SharedModule } from '../shared/shared.module';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     ChatRoutingModule,
-    SharedModule
+    SharedModule,
+    MarkdownModule.forChild(),
   ]
 })
 export class ChatModule { }
