@@ -4689,7 +4689,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   border-bottom-left-radius: 4px;
 }
 .p-fileupload .p-progressbar {
-  height: 4px;
+  height: 1.5rem;
 }
 .p-fileupload .p-fileupload-row > div {
   padding: 1rem 1rem;
@@ -6324,7 +6324,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 .p-progressbar .p-progressbar-label {
   color: #121212;
-  line-height: 4px;
+  line-height: 1.5rem;
 }
 
 .p-scrolltop {
@@ -7530,7 +7530,7 @@ p-multiselect.ng-dirty.ng-invalid .p-multiselect:not(.p-disabled).p-focus {
   border-radius: 0;
 }
 .p-progressbar .p-progressbar-label {
-  display: none !important;
+  /* display: none !important; */
 }
 
 .p-radiobutton {

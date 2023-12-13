@@ -2,7 +2,7 @@ import { onCall } from 'firebase-functions/v2/https';
 import { OpenAI } from 'openai';
 import {
   addNewMessageToDb,
-  getMessagesFromDb,
+  getChatFromDb,
   updateChatNameInDb,
   updateUsageInfo,
 } from './fitrestore';
@@ -14,11 +14,14 @@ const openai = new OpenAI({
 
 export const chatCompletion = onCall({ cors: '*' }, async (request) => {
   const data = request.data;
-  const previousMessages = await getMessagesFromDb(data.chatId);
+  const existingChat = await getChatFromDb(data.chatId);
+  const previousMessages = existingChat?.messages || [];
   addNewMessageToDb(data.chatId, {content: data.prompt, role: 'user'});
 
   const chat = await openai.chat.completions.create({
-    model: data.model || 'gpt-3.5-turbo',
+    model: existingChat?.model || 'gpt-3.5-turbo',
+    temperature: existingChat?.temperature || 1,
+    top_p: existingChat?.top_p || 1,
     messages: [
       ...previousMessages,
       {
@@ -39,7 +42,6 @@ export const chatCompletion = onCall({ cors: '*' }, async (request) => {
 
 export const models = onCall({ cors: '*' }, async (request) => {
   const models = await openai.models.list();
-  console.log(models);
   return { models };
 });
 
@@ -60,4 +62,14 @@ export const updateChatName = onCall({ cors: '*' }, async (request) => {
   })
   await updateChatNameInDb(data.chatId, chat.choices[0].message.content || 'Nowy chat');
   return { success: true };
+});
+
+export const dalle = onCall({ cors: '*' }, async (request) => {
+  const data = request.data;
+  const image = await openai.images.generate({
+    model: 'dall-e-3',
+    prompt: data.prompt,
+    response_format: 'b64_json'
+  })
+  return { image };
 });

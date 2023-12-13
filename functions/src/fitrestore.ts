@@ -15,7 +15,7 @@ export async function addNewMessageToDb(chatId: string, message: any) {
   }
 }
 
-export async function getMessagesFromDb(chatId: string) {
+export async function getChatFromDb(chatId: string) {
   try {
     const chatRef = firestore().doc(`chats/${chatId}`);
     const chatDoc = await chatRef.get();
@@ -23,12 +23,13 @@ export async function getMessagesFromDb(chatId: string) {
     console.log(chatData);
 
     if (chatData) {
-      return chatData.messages;
+      return chatData
     } else {
-      return [];
+      return {};
     }
   } catch (error) {
     console.error(error);
+    return Promise.reject(error);
   }
 }
 

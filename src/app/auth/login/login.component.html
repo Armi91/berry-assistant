@@ -2,7 +2,8 @@
 <div class="text-center mb-5">
   <!-- <img src="assets/demo/images/login/avatar.png" alt="Image" height="50" class="mb-3"> -->
   <div class="text-900 text-3xl font-medium mb-3">Cześć!</div>
-  <span class="text-600 font-medium">Zaloguj się aby kontynuować</span>
+  <span class="text-600 font-medium">Zaloguj się aby kontynuować</span><br><br>
+  <span class="font-bold" style="color: var(--primary-color)">Aktualnie tylko konta Google w domenie berrylife.pl</span>
 </div>
 
 <div>
@@ -20,6 +21,7 @@
       style="padding: 1rem"
       required
       [(ngModel)]="loginForm.email"
+      [disabled]="true"
     />
     <small *ngIf="!email.valid && email.dirty" class="text-red-500"
       >Adres email jest wymagany</small
@@ -51,6 +53,7 @@
       inputStyleClass="w-full p-3 md:w-30rem"
       required
       [(ngModel)]="loginForm.password"
+      [disabled]="true"
     ></p-password>
   </div>
 
@@ -62,11 +65,11 @@
         styleClass="mr-2"></p-checkbox>
       <label for="rememberme1">Remember me</label>
     </div> -->
-    <a
+    <!-- <a
       class="font-medium no-underline ml-2 text-right cursor-pointer"
       style="color: var(--primary-color)"
       >Nie pamiętasz hasła?</a
-    >
+    > -->
   </div>
   <div class="flex flex-column justify-content-center">
     <button

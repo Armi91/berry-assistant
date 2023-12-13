@@ -18,8 +18,6 @@ export class MessageListComponent {
     this.messages$ = this.chat.currentChat$.pipe(
       map((chat) => chat?.messages),
       tap(() => {
-        console.log(this.scrollWindow);
-
         setTimeout(() => {
           if (this.scrollWindow) {
             this.scrollWindow.scrollTo({

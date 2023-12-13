@@ -1,6 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, take } from 'rxjs';
 import { Chat } from '../_models/chat';
 import { ChatService } from '../_services/chat.service';
 
@@ -15,7 +15,10 @@ import { ChatService } from '../_services/chat.service';
   `]
 })
 export class ChatComponent {
+  // TODO: delete empty chats
   chatId?: string;
+  isSending$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  clearPrompt$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private route: ActivatedRoute, private chat: ChatService) {
     this.route.params.subscribe({
@@ -27,6 +30,30 @@ export class ChatComponent {
       }
     })
 
-    this.chat.getModelsList();
+    // this.chat.getModelsList();
+
+  }
+
+  send(prompt: string) {
+    this.chat.currentChat$.pipe(take(1)).subscribe({
+      next: (chat) => {
+        if (chat?.chatId) {
+          this.updateChatName(chat, prompt);
+          this.chat.sendPrompt(prompt, chat.chatId, chat.model).then(() => {
+            this.isSending$.next(false);
+            this.clearPrompt$.next(true);
+            this.clearPrompt$.next(false);
+          }).catch(() => {
+            this.isSending$.next(false);
+          })
+        }
+      },
+    });
+  }
+
+  updateChatName(chat: Chat, prompt: string) {
+    if (chat.messages.length === 1) {
+      this.chat.updateChatName(chat.chatId!, prompt);
+    }
   }
 }

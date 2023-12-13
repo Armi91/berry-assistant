@@ -14,9 +14,7 @@ export interface MenuItem {
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styles: [`
-
-  `],
+  styles: [``],
 })
 export class MenuComponent implements OnInit {
   model: any[] = [
@@ -33,12 +31,21 @@ export class MenuComponent implements OnInit {
           icon: 'pi pi-fw pi-plus',
           command: () => this.chat.newChat('gpt-4'),
         },
+        {
+          label: 'Custom chat',
+          icon: 'pi pi-fw pi-cog',
+          routerLink: '/u/chat/custom',
+        },
+        {
+          label: 'Dall-e 3',
+          icon: 'pi pi-fw pi-image',
+          routerLink: '/u/chat/image-generation',
+        },
       ],
     },
     {
       label: 'Czaty',
-      items: [
-      ],
+      items: [],
     },
   ];
 
@@ -61,6 +68,12 @@ export class MenuComponent implements OnInit {
             chatId: chatData['chatId'],
             createdAt: chatData['createdAt'],
           });
+        });
+        chatsHistory.sort((a, b) => {
+          return (
+            (b.createdAt as Timestamp).seconds -
+            (a.createdAt as Timestamp).seconds
+          );
         });
         this.model[1].items = chatsHistory;
         // this.cd.detectChanges();

@@ -2,9 +2,22 @@
   <div
     class="w-2rem h-2rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0"
   >
-    <i class="pi pi-dollar text-blue-500"></i>
+    <!-- <i class="pi pi-dollar p-text-secondary" *ngIf="message.role === 'system' || message.role === 'assistant'"></i> -->
+    <ng-container
+      *ngIf="message.role === 'system' || message.role === 'assistant'"
+    >
+      <img src="assets/images/berrylife-sygnet.png" class="border-circle" />
+    </ng-container>
+    <ng-container *ngIf="message.role === 'user'">
+      <ng-container *ngIf="(auth.currentUser$ | async)?.photoURL as photo">
+        <img [src]="photo" class="border-circle" />
+      </ng-container>
+    </ng-container>
   </div>
-  <span class="text-900 line-height-4 font-bold">{{ message.role === 'user' ? 'Ty' : 'Assistant' }}</span>
+  <span class="text-900 line-height-4 font-bold">{{
+    message.role === "user" ? "Ty" : "Assistant"
+  }}</span>
 </div>
-<div class="flex pl-6 flex-column message" markdown clipboard>{{message.content}}</div>
-
+<div class="flex pl-6 flex-column message" markdown clipboard>
+  {{ message.content }}
+</div>

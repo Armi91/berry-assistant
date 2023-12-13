@@ -27,7 +27,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   currentUser$: Observable<User | null> = of(null);
   authState$ = authState(this.auth);
-
+  err: any;
   constructor(
     private auth: Auth,
     private firestore: Firestore,
@@ -62,8 +62,7 @@ export class AuthService {
   async loginWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
-      // const userCreds = await signInWithRedirect(this.auth, provider)
-      const userCreds = await signInWithPopup(this.auth, provider);
+      const userCreds = await signInWithPopup(this.auth, provider)
       const userDocRef = doc(this.firestore, `users/${userCreds.user?.uid}`);
       const userSnap = await getDoc(userDocRef);
       if (!userSnap.exists()) {
@@ -75,11 +74,17 @@ export class AuthService {
         };
         await setDoc(userDocRef, user);
       }
-      console.log(userCreds.user?.uid)
       this.router.navigate(['/u/chat']);
     } catch (error: any) {
-      console.log(error);
-      this.toastr.error(error.message);
+      this.err = error;
+      // console.log(error);
+      if (error.message.includes('berryEmails')) {
+        this.toastr.error('Zaloguj się za pomocą konta Berrylife', 'Błąd', {
+          disableTimeOut: true,
+        });
+      } else {
+        this.toastr.error(error.message);
+      }
     }
   }
 

@@ -6,7 +6,11 @@
   </div>
   <div class="">
     <p-card>
-      <app-prompt></app-prompt>
+      <app-prompt
+        (onSend)="send($event)"
+        [isSending$]="isSending$"
+        [clearPrompt$]="clearPrompt$"
+      ></app-prompt>
     </p-card>
   </div>
 </div>

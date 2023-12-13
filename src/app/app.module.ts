@@ -27,7 +27,8 @@ import { environment } from 'src/environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { LayoutModule } from './layout/layout.module';
 import { MarkdownModule } from 'ngx-markdown';
-import { AuthGuardModule } from '@angular/fire/auth-guard';
+import { ImageGenerationModule } from './image-generation/image-generation.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -69,6 +70,8 @@ import { AuthGuardModule } from '@angular/fire/auth-guard';
     ToastrModule.forRoot(),
     LayoutModule,
     MarkdownModule.forRoot(),
+    ImageGenerationModule,
+    HttpClientModule
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

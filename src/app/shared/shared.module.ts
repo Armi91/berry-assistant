@@ -8,9 +8,15 @@ import { PasswordModule } from 'primeng/password';
 import { CardModule } from "primeng/card";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
+import { ProgressBarModule } from "primeng/progressbar";
+import { DropdownModule } from "primeng/dropdown";
+import { BadgeModule } from "primeng/badge";
+import { SliderModule } from "primeng/slider";
+import { ImageModule } from "primeng/image";
+import { PromptComponent } from './prompt/prompt.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [PromptComponent],
   imports: [
     CommonModule,
     ButtonModule,
@@ -20,7 +26,12 @@ import { ProgressSpinnerModule } from "primeng/progressspinner";
     PasswordModule,
     CardModule,
     InputTextareaModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    DropdownModule,
+    BadgeModule,
+    SliderModule,
+    ProgressBarModule,
+    ImageModule
   ],
   exports: [
     CommonModule,
@@ -31,7 +42,13 @@ import { ProgressSpinnerModule } from "primeng/progressspinner";
     PasswordModule,
     CardModule,
     InputTextareaModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    DropdownModule,
+    BadgeModule,
+    SliderModule,
+    PromptComponent,
+    ProgressBarModule,
+    ImageModule
   ],
 })
 export class SharedModule {}

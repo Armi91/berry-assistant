@@ -1,0 +1,35 @@
+<div class="flex flex-column h-full justify-content-between image-generation">
+  <div #scrollWindow class="flex-grow-1 mb-2">
+    <p-card>
+      <div class="grid" *ngIf="imagePreview">
+        <div class="col-12 lg:col-6 xl:col-4">
+          <p-image [src]="imagePreview" [preview]="true" #imagePrev></p-image>
+          <!-- <img [src]="imagePreview" class="image-preview" #imagePrev> -->
+        </div>
+        <div class="col-12 lg:col-6 cl:col-8">
+          <h4 class="text-2xl">Mój prompt</h4>
+          <p>{{ myPrompt }}</p>
+          <h4 class="text-2xl">Poprawiony prompt</h4>
+          <p>{{ revisedPrompt }}</p>
+          <div class="flex flex-wrap gap-2">
+            <button pButton icon="pi pi-bookmark" label="Zapisz do bazy" (click)="saveToDatabase()" [disabled]="(imagesService.isUploading$ | async)"></button>
+          </div>
+          <div class=" grid" *ngIf="(imagesService.isUploading$ | async)">
+            <div class="col my-3">
+              <p-progressBar mode="indeterminate" styleClass="h-2rem" color="var(--primary-color)"></p-progressBar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+  <div class="">
+    <p-card>
+      <app-prompt
+        (onSend)="send($event)"
+        [isSending$]="isSending$"
+        [clearPrompt$]="clearPrompt$"
+      ></app-prompt>
+    </p-card>
+  </div>
+</div>

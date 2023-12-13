@@ -72,7 +72,25 @@ export class ChatService {
         });
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    }
+  }
+
+  async newCustomChat(chat: Chat) {
+    chat.chatId = autoId();
+    try {
+      const chatDocRef = doc(this.firestore, `chats/${chat.chatId}`);
+      const user = await firstValueFrom(this.auth.currentUser$);
+
+      if (user) {
+        chat.uid = user.uid;
+        chat.createdAt = Timestamp.now();
+        setDoc(chatDocRef, chat).then((chatRef) => {
+          this.router.navigate(['/u/chat', chat.chatId]);
+        });
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -83,7 +101,7 @@ export class ChatService {
       this.toastr.success('Usunięto czat');
       this.router.navigate(['/u/chat']);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       this.toastr.error('Wystąpił błąd');
     }
   }
@@ -107,9 +125,9 @@ export class ChatService {
     const prompt = this._parsePropmpt(p);
     return this.api
       .callFunction('completion', { prompt, chatId, model })
-      .catch((error) => {
-        console.log(error);
-        this.toastr.error('Wystąpił błąd');
+      .catch((err) => {
+        console.error(err);
+        this.toastr.error(err.message, 'Wystąpił błąd');
       });
   }
 
@@ -128,19 +146,23 @@ export class ChatService {
   }
 
   getModelsList() {
-    // this.api.callFunction('models').then((models) => {
-    //   // console.log(models);
-    // }).catch(error => {
-    //   console.log(error);
-    // })
+    this.api.callFunction('models').then((models) => {
+    }).catch(error => {
+      console.error(error);
+      this.toastr.error(error.message, 'Nie udało się pobrać listy modeli');
+    })
   }
 
   updateChatName(chatId: string, prompt: string) {
     this.api
       .callFunction('updatechatname', { chatId, prompt })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
+  }
+
+  createDalleImage(prompt: string) {
+    return this.api.callFunction('dalle', { prompt });
   }
 
   private _parsePropmpt(prompt: string) {

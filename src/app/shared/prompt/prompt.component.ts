@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { take } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, take } from 'rxjs';
 import { Chat } from 'src/app/_models/chat';
 import { ChatService } from 'src/app/_services/chat.service';
 
@@ -24,10 +24,25 @@ import { ChatService } from 'src/app/_services/chat.service';
     `,
   ],
 })
-export class PromptComponent {
+export class PromptComponent implements OnInit {
   prompt: string = '';
-  isSending: boolean = false;
+
+  @Input({required: true}) isSending$!: BehaviorSubject<boolean>;
+  @Input({required: true}) clearPrompt$!: BehaviorSubject<boolean>;
+  @Input() promptType?: string;
+  @Output() onSend: EventEmitter<string> = new EventEmitter();
+
   constructor(private chat: ChatService) {}
+
+  ngOnInit(): void {
+    this.clearPrompt$.subscribe({
+      next: (clear) => {
+        if (clear) {
+          this.prompt = '';
+        }
+      }
+    })
+  }
 
   send(event: KeyboardEvent | null = null) {
     if (event) {
@@ -36,25 +51,7 @@ export class PromptComponent {
     if (!this.prompt) {
       return;
     }
-    this.isSending = true;
-    this.chat.currentChat$.pipe(take(1)).subscribe({
-      next: (chat) => {
-        if (chat?.chatId) {
-          this.checkIfUpdateChatName(chat);
-          this.chat.sendPrompt(this.prompt, chat.chatId, chat.model).then(() => {
-            this.isSending = false;
-            this.prompt = '';
-          }).catch(() => {
-            this.isSending = false;
-          })
-        }
-      },
-    });
-  }
-
-  checkIfUpdateChatName(chat: Chat) {
-    if (chat.messages.length === 1) {
-      this.chat.updateChatName(chat.chatId!, this.prompt);
-    }
+    this.isSending$.next(true);
+    this.onSend.emit(this.prompt);
   }
 }

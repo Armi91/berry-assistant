@@ -11,6 +11,10 @@ $gutter: 1rem; //for primeflex grid system
 // ngx-spinner
 // @import "../node_modules/ngx-spinner/animations/ball-fussion.css";
 
+img {
+  max-width: 100%;
+}
+
 .message {
   ul {
     margin-bottom: $gutter;
