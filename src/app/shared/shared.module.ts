@@ -13,6 +13,7 @@ import { DropdownModule } from "primeng/dropdown";
 import { BadgeModule } from "primeng/badge";
 import { SliderModule } from "primeng/slider";
 import { ImageModule } from "primeng/image";
+import { AccordionModule } from "primeng/accordion";
 import { PromptComponent } from './prompt/prompt.component';
 
 @NgModule({
@@ -31,7 +32,8 @@ import { PromptComponent } from './prompt/prompt.component';
     BadgeModule,
     SliderModule,
     ProgressBarModule,
-    ImageModule
+    ImageModule,
+    AccordionModule,
   ],
   exports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { PromptComponent } from './prompt/prompt.component';
     SliderModule,
     PromptComponent,
     ProgressBarModule,
-    ImageModule
+    ImageModule,
+    AccordionModule,
   ],
 })
 export class SharedModule {}

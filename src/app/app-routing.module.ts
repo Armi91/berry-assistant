@@ -17,6 +17,10 @@ const routes: Routes = [
       {
         path: 'chat',
         loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule)
+      },
+      {
+        path: 'images',
+        loadChildren: () => import('./image-generation/image-generation.module').then(m => m.ImageGenerationModule)
       }
     ]
   },

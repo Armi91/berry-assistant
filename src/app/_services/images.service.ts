@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { ToastrService } from 'ngx-toastr';
 import { StorageService } from './storage.service';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, Timestamp, collection, collectionData, doc, query, setDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { AuthService } from './auth.service';
 import { StorageReference, getDownloadURL } from '@angular/fire/storage';
 import { HttpClient } from '@angular/common/http';
+import { GeneratedImage } from '../_models/GeneratedImage';
 
 @Injectable({
   providedIn: 'root',
@@ -53,6 +54,7 @@ export class ImagesService {
           revisedPrompt,
           uid,
           url,
+          createdAt: Timestamp.now(),
         }).then((x) => {})
         this.toastr.success('Zapisano obraz', 'Sukces');
         this.isUploading$.next(false);
@@ -105,5 +107,20 @@ export class ImagesService {
         console.log(blob);
       }
     })
+  }
+
+  async getSavedImages(): Promise<GeneratedImage[]> {
+    try {
+      const user = await firstValueFrom(this.auth.currentUser$);
+      const uid = user?.uid;
+      if (!uid) throw new Error('Brak użytkownika');
+      const imagesRef = collection(this.firestore, `images/users/${uid}`);
+      const imagesData = await firstValueFrom(collectionData(imagesRef));
+      return imagesData as GeneratedImage[];
+    } catch (err: any) {
+      this.toastr.error(err.message, 'Wystąpił błąd');
+      console.error(err);
+      return new Promise((resolve, reject) => reject(err));
+    }
   }
 }

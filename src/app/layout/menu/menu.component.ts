@@ -19,7 +19,7 @@ export interface MenuItem {
 export class MenuComponent implements OnInit {
   model: any[] = [
     {
-      label: 'Nowy czat',
+      label: 'Menu',
       items: [
         {
           label: 'GPT-3.5',
@@ -39,7 +39,12 @@ export class MenuComponent implements OnInit {
         {
           label: 'Dall-e 3',
           icon: 'pi pi-fw pi-image',
-          routerLink: '/u/chat/image-generation',
+          routerLink: '/u/images/image-generation',
+        },
+        {
+          label: 'Zapisane obrazy',
+          icon: 'pi pi-fw pi-image',
+          routerLink: '/u/images',
         },
       ],
     },

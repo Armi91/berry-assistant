@@ -54,4 +54,6 @@ functions/src/_secrets.ts
 functions/.env
 /functions/src/keys
 /public
+/public/*
 /functions/lib
+public/index.html

@@ -1,0 +1,20 @@
+<ng-container *ngIf="(images | async) as images">
+  <div class="grid">
+    <div class="col-12 md:col-6 lg:col-4 xl:col-3" *ngFor="let image of images">
+      <p-card>
+        <ng-template pTemplate="header">
+          <p-image [src]="image.url" [preview]="true"></p-image>
+        </ng-template>
+        <p-button label="Pobierz" (onClick)="download(image.url, image.name)" styleClass="w-full mb-2"></p-button>
+        <p-accordion [multiple]="true">
+          <p-accordionTab header="Original prompt">
+            <p>{{ image.prompt }}</p>
+          </p-accordionTab>
+          <p-accordionTab header="Revised prompt">
+            <p>{{ image.revisedPrompt }}</p>
+          </p-accordionTab>
+        </p-accordion>
+      </p-card>
+    </div>
+  </div>
+</ng-container>
