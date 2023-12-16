@@ -11,11 +11,11 @@ import { AuthService } from 'src/app/_services/auth.service';
 export class TopBarComponent {
 
   items!: MenuItem[];
-  @ViewChild('menuButton') menuButton!: ElementRef;
-  @ViewChild('topBarMenuButton') topBarMenuButton!: ElementRef;
-  @ViewChild('topBarMenu') topBarMenu!: ElementRef;
+  @ViewChild('menubutton') menuButton!: ElementRef;
+  @ViewChild('topbarmenubutton') topBarMenuButton!: ElementRef;
+  @ViewChild('topbarmenu') menu!: ElementRef;
 
-  constructor(protected layoutService: LayoutService, private auth: AuthService) {}
+  constructor(public layoutService: LayoutService, private auth: AuthService) {}
 
   signOut() {
     this.auth.signOut();

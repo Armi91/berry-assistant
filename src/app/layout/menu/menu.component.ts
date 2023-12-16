@@ -32,6 +32,11 @@ export class MenuComponent implements OnInit {
           command: () => this.chat.newChat('gpt-4'),
         },
         {
+          label: 'GPT-4 Turbo',
+          icon: 'pi pi-fw pi-plus',
+          command: () => this.chat.newChat('gpt-4-1106-preview'),
+        },
+        {
           label: 'Custom chat',
           icon: 'pi pi-fw pi-cog',
           routerLink: '/u/chat/custom',

@@ -1,5 +1,8 @@
 <div class="flex">
-  <div class="col-12 lg:col-8 lg:col-offset-2">
+  <div class="col-12 lg:col-2" *ngIf="showFileUpload">
+    <app-file-upload [isSending$]="isSending$"></app-file-upload>
+  </div>
+  <div class="col-12 lg:col-8" [ngClass]="{'lg:col-offset-2': !showFileUpload}">
     <span class="p-input-icon-right w-full">
       <textarea
         class="w-full"

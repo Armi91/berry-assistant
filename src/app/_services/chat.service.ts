@@ -40,7 +40,13 @@ export class ChatService {
     private auth: AuthService,
     private router: Router,
     private toastr: ToastrService
-  ) {}
+  ) {
+
+  }
+
+  get currentChatId() {
+    return this._currentChat.getValue()?.chatId;
+  }
 
   async newChat(model: string) {
     try {
@@ -121,10 +127,17 @@ export class ChatService {
     });
   }
 
-  sendPrompt(p: string, chatId: string, model: string) {
-    const prompt = this._parsePropmpt(p);
+  sendPrompt(prompt: string, chatId: string, model: string, url?: string) {
+    const body: any = {
+      prompt,
+      chatId,
+      model
+    }
+    if (url) {
+      body['pdf_link'] = url;
+    }
     return this.api
-      .callFunction('completion', { prompt, chatId, model })
+      .callFunction('completion', body)
       .catch((err) => {
         console.error(err);
         this.toastr.error(err.message, 'Wystąpił błąd');
@@ -163,6 +176,12 @@ export class ChatService {
 
   createDalleImage(prompt: string) {
     return this.api.callFunction('dalle', { prompt });
+  }
+
+  extract() {
+    this.api.callFunction('extract', {pdf_link: 'https://firebasestorage.googleapis.com/v0/b/berry-assistant-f865d.appspot.com/o/temp%2Fhp.pdf?alt=media&token=61e8ce9c-b2c5-4511-aeb6-0b5bd08c156e'}).then((text) => {
+      console.log(text);
+    })
   }
 
   private _parsePropmpt(prompt: string) {

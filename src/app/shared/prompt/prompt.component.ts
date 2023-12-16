@@ -30,6 +30,7 @@ export class PromptComponent implements OnInit {
   @Input({required: true}) isSending$!: BehaviorSubject<boolean>;
   @Input({required: true}) clearPrompt$!: BehaviorSubject<boolean>;
   @Input() promptType?: string;
+  @Input() showFileUpload?: boolean;
   @Output() onSend: EventEmitter<string> = new EventEmitter();
 
   constructor(private chat: ChatService) {}

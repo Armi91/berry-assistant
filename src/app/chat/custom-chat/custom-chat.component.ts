@@ -19,6 +19,10 @@ export class CustomChatComponent {
     {
       name: 'gpt-4',
       type: 'text'
+    },
+    {
+      name: 'gpt-4-1106-preview',
+      type: 'text'
     }
   ];
 

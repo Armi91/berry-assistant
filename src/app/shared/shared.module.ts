@@ -14,10 +14,12 @@ import { BadgeModule } from "primeng/badge";
 import { SliderModule } from "primeng/slider";
 import { ImageModule } from "primeng/image";
 import { AccordionModule } from "primeng/accordion";
+import { FileUploadModule } from "primeng/fileupload";
 import { PromptComponent } from './prompt/prompt.component';
+import { FileUploadComponent } from './prompt/file-upload/file-upload.component';
 
 @NgModule({
-  declarations: [PromptComponent],
+  declarations: [PromptComponent, FileUploadComponent],
   imports: [
     CommonModule,
     ButtonModule,
@@ -34,6 +36,7 @@ import { PromptComponent } from './prompt/prompt.component';
     ProgressBarModule,
     ImageModule,
     AccordionModule,
+    FileUploadModule,
   ],
   exports: [
     CommonModule,
@@ -52,6 +55,7 @@ import { PromptComponent } from './prompt/prompt.component';
     ProgressBarModule,
     ImageModule,
     AccordionModule,
+    FileUploadModule,
   ],
 })
 export class SharedModule {}
