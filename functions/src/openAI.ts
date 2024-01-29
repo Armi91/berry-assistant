@@ -46,12 +46,9 @@ export const chatCompletion = onCall({ cors: '*' }, async (request) => {
   });
 
   const chatMessage = { ...chat.choices[0].message, isHidden: false };
-  // for await (const chunk of chat) {
-  //   console.log(chunk.choices[0].delta.content);
-  // }
   await addNewMessageToDb(data.chatId, chatMessage);
   await updateUsageInfo(data.chatId, chat.usage);
-  // return {chat};
+
   return { ...previousMessages };
 });
 

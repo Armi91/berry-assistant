@@ -178,12 +178,6 @@ export class ChatService {
     return this.api.callFunction('dalle', { prompt });
   }
 
-  extract() {
-    this.api.callFunction('extract', {pdf_link: 'https://firebasestorage.googleapis.com/v0/b/berry-assistant-f865d.appspot.com/o/temp%2Fhp.pdf?alt=media&token=61e8ce9c-b2c5-4511-aeb6-0b5bd08c156e'}).then((text) => {
-      console.log(text);
-    })
-  }
-
   private _parsePropmpt(prompt: string) {
     // TODO: parse prompt
     return prompt;

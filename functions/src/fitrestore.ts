@@ -20,8 +20,6 @@ export async function getChatFromDb(chatId: string) {
     const chatRef = firestore().doc(`chats/${chatId}`);
     const chatDoc = await chatRef.get();
     const chatData = chatDoc.data();
-    console.log(chatData);
-
     if (chatData) {
       return chatData
     } else {

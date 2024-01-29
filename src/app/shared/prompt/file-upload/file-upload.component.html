@@ -4,4 +4,5 @@
   name="demo[]"
   accept="application/pdf"
   (onSelect)="onSelect($event)"
+  [disabled]="(isSending$ | async)!"
 ></p-fileUpload>

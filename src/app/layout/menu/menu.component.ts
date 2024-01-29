@@ -86,7 +86,6 @@ export class MenuComponent implements OnInit {
           );
         });
         this.model[1].items = chatsHistory;
-        // this.cd.detectChanges();
       },
     });
   }
