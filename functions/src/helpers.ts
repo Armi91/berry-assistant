@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getTextFromPdf = async (pdf_link: string) => {
-  // const functionUrl = 'http://127.0.0.1:5001/berry-assistant-f865d/us-central1/parse_pdf'
+  // const functionUrl = 'http://127.0.0.1:5001/berry-assistant-f865d/us-central1/parse_pdf' // local url
   const functionUrl = 'https://parse-pdf-vsx63c7hga-uc.a.run.app';
   const body = {
     pdf_link

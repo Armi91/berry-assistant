@@ -1,27 +1,42 @@
-# BerryAssistant
+<h1 align="center">Berry Assistant</h1>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.8.
+<p align="center">
+  <img alt="Github language count" src="https://img.shields.io/github/languages/count/armi91/berry-assistant?color=56BEB8">
 
-## Development server
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/armi91/berry-assistant?color=56BEB8">
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+  <img alt="License" src="https://img.shields.io/github/license/armi91/berry-assistant?color=56BEB8">
+</p>
 
-## Code scaffolding
+<p align="center">
+  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
+  <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
+  <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
+  <a href="https://github.com/armi91" target="_blank">Author</a>
+</p>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+<br>
 
-## Build
+## :dart: About
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+A virtual assistant powered by AI technology. It includes image generation feature using the DALL-E 3 model. Additionally, the project allows users to upload and parse PDF text files, which the AI can then utilize the content from for various tasks.
 
-## Running unit tests
+## :sparkles: Features
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+:heavy_check_mark: Interacting with ChatGPT
+:heavy_check_mark: Generating images using Dall-e 3
+:heavy_check_mark: Uploading PDF files
 
-## Running end-to-end tests
+## :rocket: Technologies
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+The following tools were used in this project:
 
-## Further help
+- [Angular](https://angular.io/)
+- [Node.js](https://nodejs.org/en/)
+- [PrimeNG](https://primeng.org/)
+- [OpenAI](https://openai.com/)
+- [Firebase](https://firebase.google.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Made by <a href="https://github.com/armi91" target="_blank">Dawid Armatys | Berrylife</a>
+&#xa0;

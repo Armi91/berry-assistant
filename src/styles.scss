@@ -16,16 +16,14 @@ img {
 }
 
 .message {
-  ul {
+  ul, ol {
     margin-bottom: $gutter;
-    li:nth-last-child {
-      margin-bottom: $gutter;
-    }
-  }
-  ol {
-    margin-bottom: $gutter;
-    li:nth-last-child {
-      margin-bottom: $gutter;
+    li {
+      margin-bottom: 0.6rem;
+      &:nth-last-child {
+        margin-bottom: $gutter;
+      }
+
     }
   }
   pre {
