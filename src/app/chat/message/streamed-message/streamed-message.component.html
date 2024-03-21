@@ -1,0 +1,14 @@
+<div class="flex mb-3">
+  <div
+    class="w-2rem h-2rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0"
+  >
+    <img src="assets/images/berrylife-sygnet.png" class="border-circle" />
+  </div>
+  <span class="text-900 line-height-4 font-bold">Assistant</span>
+</div>
+<div
+  class="flex pl-6 flex-column message"
+  markdown
+  clipboard
+  [data]="(streamedMessage$ | async)?.content"
+></div>

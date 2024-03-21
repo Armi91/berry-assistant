@@ -8,6 +8,7 @@ import { MessageComponent } from './message/message.component';
 import { SharedModule } from '../shared/shared.module';
 import { MarkdownModule } from 'ngx-markdown';
 import { CustomChatComponent } from './custom-chat/custom-chat.component';
+import { StreamedMessageComponent } from './message/streamed-message/streamed-message.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { CustomChatComponent } from './custom-chat/custom-chat.component';
     ChatComponent,
     MessageListComponent,
     MessageComponent,
-    CustomChatComponent
+    CustomChatComponent,
+    StreamedMessageComponent
   ],
   imports: [
     CommonModule,

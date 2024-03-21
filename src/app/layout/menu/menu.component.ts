@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit {
       label: 'Menu',
       items: [
         {
-          label: 'GPT-3.5',
+          label: 'GPT-3.5 Turbo',
           icon: 'pi pi-fw pi-plus',
           command: () => this.chat.newChat('gpt-3.5-turbo'),
         },
@@ -34,7 +34,7 @@ export class MenuComponent implements OnInit {
         {
           label: 'GPT-4 Turbo',
           icon: 'pi pi-fw pi-plus',
-          command: () => this.chat.newChat('gpt-4-1106-preview'),
+          command: () => this.chat.newChat('gpt-4-turbo-preview'),
         },
         {
           label: 'Custom chat',
@@ -79,13 +79,18 @@ export class MenuComponent implements OnInit {
             createdAt: chatData['createdAt'],
           });
         });
-        chatsHistory.sort((a, b) => {
+        this.model[1].items = chatsHistory.sort((a, b) => {
           return (
             (b.createdAt as Timestamp).seconds -
             (a.createdAt as Timestamp).seconds
           );
         });
-        this.model[1].items = chatsHistory;
+        // this.model[1].items = chatsHistory;
+        // const x = chatsHistory.map((chat) => ({
+        //   name: chat.label,
+        //   createdAt: chat.createdAt as Timestamp,
+        // }));
+        // console.log(x);
       },
     });
   }

@@ -12,7 +12,7 @@ import { StorageService } from 'src/app/_services/storage.service';
   styles: [],
 })
 export class FileUploadComponent {
-  @Input({required: true}) isSending$!: BehaviorSubject<boolean>;
+  @Input({ required: true }) isSending$!: BehaviorSubject<boolean>;
   file?: File;
 
   constructor(
@@ -28,13 +28,14 @@ export class FileUploadComponent {
     if (url) {
       this.chatService.currentChat$.pipe(take(1)).subscribe({
         next: (chat) => {
-          this.chatService.sendPrompt('', chat?.chatId!, chat?.model!, url).then(() => {
-            this.isSending$.next(false);
-          }).catch((err) => {
-            console.error(err);
-            this.toastr.error('Błąd podczas wysyłania pliku');
-            this.isSending$.next(false);
-          })
+          throw new Error('Function not implemented.');
+          // this.chatService.sendPrompt('', chat?.chatId!, chat?.model!, url).then(() => {
+          //   this.isSending$.next(false);
+          // }).catch((err) => {
+          //   console.error(err);
+          //   this.toastr.error('Błąd podczas wysyłania pliku');
+          //   this.isSending$.next(false);
+          // })
         },
       });
     } else {

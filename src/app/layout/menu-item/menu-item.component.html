@@ -9,12 +9,14 @@
     [ngClass]="item.class"
     [attr.target]="item.target"
     tabindex="0"
-    pRipple>
+    pRipple
+  >
     <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
     <span class="layout-menuitem-text">{{ item.label }}</span>
     <i
       class="pi pi-fw pi-angle-down layout-submenu-toggler"
-      *ngIf="item.items"></i>
+      *ngIf="item.items"
+    ></i>
     <i class="pi"></i>
   </a>
   <a
@@ -40,24 +42,43 @@
     [queryParams]="item.queryParams"
     [attr.target]="item.target"
     tabindex="0"
-    pRipple>
+    pRipple
+  >
     <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
-    <span class="layout-menuitem-text">{{ item.label }}</span>
+    <span
+      *ngIf="item.isChat"
+      class="layout-menuitem-text"
+      [pTooltip]="item.label"
+      tooltipPosition="right"
+      tooltipStyleClass="p-tooltip-info"
+      >{{ item.label | slice : 0 : 20 }}
+      {{ item.label.length > 20 ? "..." : "" }}</span
+    >
+    <span *ngIf="!item.isChat" class="layout-menuitem-text">{{
+      item.label
+    }}</span>
     <i
       class="pi pi-fw pi-angle-down layout-submenu-toggler"
-      *ngIf="item.items"></i>
+      *ngIf="item.items"
+    ></i>
   </a>
-  <i *ngIf="item.isChat" class="pi pi-trash cursor-pointer" (click)="chat.deleteChat(item.chatId)"></i>
+  <i
+    *ngIf="item.isChat"
+    class="pi pi-trash cursor-pointer"
+    (click)="chat.deleteChat(item.chatId)"
+  ></i>
   <ul
     *ngIf="item.items && item.visible !== false"
-    [@children]="submenuAnimation">
+    [@children]="submenuAnimation"
+  >
     <ng-template ngFor let-child let-i="index" [ngForOf]="item.items">
       <li
         app-menu-item
         [item]="child"
         [index]="i"
         [parentKey]="key"
-        [class]="child.badgeClass"></li>
+        [class]="child.badgeClass"
+      ></li>
     </ng-template>
   </ul>
 </ng-container>

@@ -41,6 +41,10 @@ export class AuthService {
     return authState(this.auth).pipe(
       switchMap((userCreds) => {
         if (userCreds) {
+          // userCreds.getIdToken().then((token) => {
+          //   console.log(token);
+          // });
+
           return <Observable<User>>(
             docData(doc(this.firestore, `users/${userCreds.uid}`))
           );
@@ -62,7 +66,7 @@ export class AuthService {
   async loginWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
-      const userCreds = await signInWithPopup(this.auth, provider)
+      const userCreds = await signInWithPopup(this.auth, provider);
       const userDocRef = doc(this.firestore, `users/${userCreds.user?.uid}`);
       const userSnap = await getDoc(userDocRef);
       if (!userSnap.exists()) {
@@ -100,5 +104,9 @@ export class AuthService {
 
   setCurrentUser(uid: string) {
     docData(doc(this.firestore, `users/${uid}`));
+  }
+
+  async getIdToken() {
+    return await this.auth.currentUser?.getIdToken();
   }
 }

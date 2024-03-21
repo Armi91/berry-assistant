@@ -2,19 +2,23 @@
   <div class="col-12 lg:col-8 lg:col-offset-2">
     <ul class="p-0 mx-0 mt-0 mb-4 list-none">
       <ng-container *ngFor="let message of messages$ | async">
-        <li class="flex align-items-center py-4 border-bottom-1 surface-border" *ngIf="!message.isHidden">
+        <li
+          class="flex align-items-center py-4 border-bottom-1 surface-border"
+          *ngIf="!message.isHidden"
+        >
           <app-message [message]="message"></app-message>
         </li>
       </ng-container>
-      <!-- <li class="flex align-items-center py-4 border-bottom-1 surface-border">
-        <app-message role="system"></app-message>
+      <!-- <ng-container *ngIf="(streamedMessage$ | async)?.streaming"> -->
+      <li
+        class="flex align-items-center py-4 border-bottom-1 surface-border"
+        *ngIf="(streamedMessage$ | async)?.streaming"
+      >
+        <app-streamed-message
+          [streamedMessage]="streamedMessage$"
+        ></app-streamed-message>
       </li>
-      <li class="flex align-items-center py-4 border-bottom-1 surface-border">
-        <app-message></app-message>
-      </li>
-      <li class="flex align-items-center py-4 border-bottom-1 surface-border">
-        <app-message></app-message>
-      </li> -->
+      <!-- </ng-container> -->
     </ul>
   </div>
 </div>

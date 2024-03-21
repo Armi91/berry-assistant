@@ -1,8 +1,11 @@
-<div class="flex">
+<div class="grid">
   <div class="col-12 lg:col-2" *ngIf="showFileUpload">
     <app-file-upload [isSending$]="isSending$"></app-file-upload>
   </div>
-  <div class="col-12 lg:col-8" [ngClass]="{'lg:col-offset-2': !showFileUpload}">
+  <div
+    class="col-12 lg:col-8"
+    [ngClass]="{ 'lg:col-offset-2': !showFileUpload }"
+  >
     <span class="p-input-icon-right w-full">
       <textarea
         class="w-full"
@@ -12,10 +15,21 @@
         pInputTextarea
         [(ngModel)]="prompt"
         (keyup.enter)="send()"
-        disabled="{{(isSending$ | async)}}"
+        disabled="{{ isSending$ | async }}"
       ></textarea>
-      <i *ngIf="!(isSending$ | async)" class="pi pi-send cursor-pointer" (click)="send()"></i>
-      <p-progressSpinner *ngIf="isSending$ | async" styleClass="w-1rem h-1rem" class="spinner" strokeWidth="8px"></p-progressSpinner>
+      <!-- TODO: Menu w popupie -->
+      <!-- <i class="pi pi-plus cursor-pointer extras"></i> -->
+      <i
+        *ngIf="!(isSending$ | async)"
+        class="pi pi-send cursor-pointer"
+        (click)="send()"
+      ></i>
+      <p-progressSpinner
+        *ngIf="isSending$ | async"
+        styleClass="w-1rem h-1rem"
+        class="spinner"
+        strokeWidth="8px"
+      ></p-progressSpinner>
     </span>
   </div>
 </div>

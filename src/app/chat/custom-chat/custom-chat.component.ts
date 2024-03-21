@@ -7,23 +7,22 @@ import { ChatService } from 'src/app/_services/chat.service';
 @Component({
   selector: 'app-custom-chat',
   templateUrl: './custom-chat.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class CustomChatComponent {
   models = [
     {
       name: 'gpt-3.5-turbo',
-      type: 'text'
+      type: 'text',
     },
     {
       name: 'gpt-4',
-      type: 'text'
+      type: 'text',
     },
     {
-      name: 'gpt-4-1106-preview',
-      type: 'text'
-    }
+      name: 'gpt-4-turbo-preview',
+      type: 'text',
+    },
   ];
 
   chatData: Chat = {
@@ -35,19 +34,17 @@ export class CustomChatComponent {
     messages: [
       {
         role: 'system',
-        content: 'You are a helpful assistant.'
-      }
+        content: 'You are a helpful assistant.',
+      },
     ],
     usage: {
       completion_tokens: 0,
       prompt_tokens: 0,
-      total_tokens: 0
-    }
-  }
+      total_tokens: 0,
+    },
+  };
 
-  constructor(private chat: ChatService) {
-
-  }
+  constructor(private chat: ChatService) {}
 
   async createChat() {
     this.chat.newCustomChat(this.chatData);

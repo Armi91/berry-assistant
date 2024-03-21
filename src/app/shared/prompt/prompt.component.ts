@@ -21,14 +21,19 @@ import { ChatService } from 'src/app/_services/chat.service';
         bottom: 1.2rem;
         right: 1rem;
       }
+      .extras {
+        position: absolute;
+        top: 1.5rem;
+        right: 1rem;
+      }
     `,
   ],
 })
 export class PromptComponent implements OnInit {
   prompt: string = '';
 
-  @Input({required: true}) isSending$!: BehaviorSubject<boolean>;
-  @Input({required: true}) clearPrompt$!: BehaviorSubject<boolean>;
+  @Input({ required: true }) isSending$!: BehaviorSubject<boolean>;
+  @Input({ required: true }) clearPrompt$!: BehaviorSubject<boolean>;
   @Input() promptType?: string;
   @Input() showFileUpload?: boolean;
   @Output() onSend: EventEmitter<string> = new EventEmitter();
@@ -41,8 +46,8 @@ export class PromptComponent implements OnInit {
         if (clear) {
           this.prompt = '';
         }
-      }
-    })
+      },
+    });
   }
 
   send(event: KeyboardEvent | null = null) {

@@ -5,7 +5,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { AuthModule, connectAuthEmulator, getAuth, provideAuth } from '@angular/fire/auth';
+import {
+  AuthModule,
+  connectAuthEmulator,
+  getAuth,
+  provideAuth,
+} from '@angular/fire/auth';
 import {
   getAnalytics,
   provideAnalytics,
@@ -22,7 +27,11 @@ import {
   getFunctions,
   provideFunctions,
 } from '@angular/fire/functions';
-import { connectStorageEmulator, getStorage, provideStorage } from '@angular/fire/storage';
+import {
+  connectStorageEmulator,
+  getStorage,
+  provideStorage,
+} from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { LayoutModule } from './layout/layout.module';
@@ -61,11 +70,14 @@ import { HttpClientModule } from '@angular/common/http';
       return storage;
     }),
     AuthModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      autoDismiss: false,
+      tapToDismiss: true,
+    }),
     LayoutModule,
     MarkdownModule.forRoot(),
     ImageGenerationModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

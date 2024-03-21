@@ -1,7 +1,10 @@
 <div class="flex flex-column h-full justify-content-between" *ngIf="chatId">
   <div #scrollWindow class="flex-grow-1 mb-2 overflow-y-scroll">
     <p-card>
-      <app-message-list [scrollWindow]="scrollWindow"></app-message-list>
+      <app-message-list
+        [scrollWindow]="scrollWindow"
+        [streamedMessage]="streamedMessage$"
+      ></app-message-list>
     </p-card>
   </div>
   <div class="">

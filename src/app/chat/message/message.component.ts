@@ -11,7 +11,5 @@ import { ChatService } from 'src/app/_services/chat.service';
 })
 export class MessageComponent {
   @Input('message') message!: Message;
-  constructor(private route: ActivatedRoute, protected chat: ChatService, protected auth: AuthService) {
-
-  }
+  constructor(protected chat: ChatService, protected auth: AuthService) {}
 }

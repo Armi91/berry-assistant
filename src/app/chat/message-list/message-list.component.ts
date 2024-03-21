@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { Message } from 'src/app/_models/chat';
 import { ChatService } from 'src/app/_services/chat.service';
 
@@ -11,6 +11,10 @@ import { ChatService } from 'src/app/_services/chat.service';
 })
 export class MessageListComponent {
   @Input('scrollWindow') scrollWindow?: HTMLElement;
+  @Input('streamedMessage') streamedMessage$!: BehaviorSubject<{
+    content: string;
+    streaming: boolean;
+  }>;
   chatId?: string;
   messages$: Observable<Message[] | undefined>;
 
