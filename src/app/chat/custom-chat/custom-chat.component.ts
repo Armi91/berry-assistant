@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Timestamp } from '@angular/fire/firestore';
-import { autoId } from 'src/app/_helpers/autoID';
 import { Chat } from 'src/app/_models/chat';
 import { ChatService } from 'src/app/_services/chat.service';
 

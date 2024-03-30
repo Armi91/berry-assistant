@@ -1,8 +1,22 @@
-<p-fileUpload
-  mode="basic"
-  chooseLabel="Dodaj plik"
-  name="demo[]"
-  accept="application/pdf"
-  (onSelect)="onSelect($event)"
-  [disabled]="(isSending$ | async)!"
-></p-fileUpload>
+<div class="flex flex-column">
+  <p-fileUpload
+    #fileUpload
+    mode="basic"
+    chooseLabel="Dodaj plik"
+    name="demo[]"
+    accept="application/pdf"
+    [multiple]="true"
+    (onSelect)="onSelect($event)"
+    [disabled]="(isSending$ | async)!"
+  ></p-fileUpload>
+  <div class="mt-3">
+    <p class="mt-0 mb-1" *ngFor="let file of uploadedFiles$ | async">
+      <i
+        class="pi pi-minus-circle mr-2 cursor-pointer"
+        (click)="deleteFile(file.id)"
+      ></i>
+      {{ file.name | slice : 0 : 20 }}
+      {{ file.name.length > 20 ? "..." : "" }}
+    </p>
+  </div>
+</div>

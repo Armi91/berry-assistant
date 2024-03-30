@@ -1,4 +1,4 @@
-import { Timestamp } from "@angular/fire/firestore";
+import { Timestamp } from '@angular/fire/firestore';
 
 export interface Message {
   role: 'assistant' | 'system' | 'user' | 'tool' | 'function';
@@ -17,11 +17,11 @@ export interface Chat {
   top_p?: number; // 0.0 - 1.0
   hasFile?: boolean;
   fileUrl?: string;
-  fileAssigned?: boolean;
+  attachedFiles?: Array<{ id: string; name: string }>;
+  threadId?: string;
   usage?: {
     completion_tokens?: number;
     prompt_tokens?: number;
     total_tokens?: number;
-  }
+  };
 }
-

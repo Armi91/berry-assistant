@@ -1,9 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { getDownloadURL } from '@angular/fire/storage';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Firestore, doc, docData } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { FileSelectEvent, FileUploadEvent } from 'primeng/fileupload';
-import { BehaviorSubject, take } from 'rxjs';
+import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
+import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 import { ChatService } from 'src/app/_services/chat.service';
+import { FileService } from 'src/app/_services/file.service';
 import { StorageService } from 'src/app/_services/storage.service';
 
 @Component({
@@ -13,49 +15,58 @@ import { StorageService } from 'src/app/_services/storage.service';
 })
 export class FileUploadComponent {
   @Input({ required: true }) isSending$!: BehaviorSubject<boolean>;
+  @ViewChild('fileUpload') fileUpload?: FileUpload;
   file?: File;
+  uploadedFiles$?: Observable<{ name: string; id: string }[]>;
 
   constructor(
-    private storageService: StorageService,
     private chatService: ChatService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private fileService: FileService,
+    private firestore: Firestore,
+    private route: ActivatedRoute
   ) {}
 
-  async onSelect(event: FileSelectEvent) {
-    this.file = event.currentFiles[0];
-    this.isSending$.next(true);
-    const url = await this.upload();
-    if (url) {
-      this.chatService.currentChat$.pipe(take(1)).subscribe({
-        next: (chat) => {
-          throw new Error('Function not implemented.');
-          // this.chatService.sendPrompt('', chat?.chatId!, chat?.model!, url).then(() => {
-          //   this.isSending$.next(false);
-          // }).catch((err) => {
-          //   console.error(err);
-          //   this.toastr.error('Błąd podczas wysyłania pliku');
-          //   this.isSending$.next(false);
-          // })
-        },
-      });
-    } else {
-      this.isSending$.next(false);
-      this.toastr.error('Błąd podczas wysyłania pliku');
-    }
+  ngOnInit() {
+    this.uploadedFiles$ = this.route.params.pipe(
+      switchMap((params) =>
+        docData(doc(this.firestore, `chats/${params['chatId']}`))
+      ),
+      map((chat: any) => chat.attachedFiles)
+    );
   }
 
-  async upload() {
-    if (!this.file) return null;
-    try {
-      const task = await this.storageService.upload(
-        this.file,
-        `temp/${this.file.name}`
-      );
-      const url = await getDownloadURL(task.ref);
-      return url;
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
+  async onSelect(event: FileSelectEvent) {
+    this.isSending$.next(true);
+    this.fileService.uploadFile(event.currentFiles)?.subscribe({
+      next: () => {
+        this.toastr.success('Plik został przesłany');
+        this.chatService.getChat(this.chatService.currentChatId!);
+      },
+      error: (error) => {
+        console.error(error);
+        this.toastr.error('Błąd podczas przesyłania pliku');
+      },
+      complete: () => {
+        this.isSending$.next(false);
+        this.fileUpload?.clear();
+      },
+    });
+  }
+
+  async deleteFile(fileId: string) {
+    this.isSending$.next(true);
+    this.fileService.deleteFile(fileId)?.subscribe({
+      next: (data) => {
+        this.toastr.success('Usunięto plik');
+      },
+      error: (error) => {
+        console.error(error);
+        this.toastr.error('Błąd podczas usuwania pliku');
+      },
+      complete: () => {
+        this.isSending$.next(false);
+      },
+    });
   }
 }

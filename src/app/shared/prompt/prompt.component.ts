@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, take } from 'rxjs';
-import { Chat } from 'src/app/_models/chat';
+import { BehaviorSubject } from 'rxjs';
 import { ChatService } from 'src/app/_services/chat.service';
 
 @Component({
@@ -38,7 +37,7 @@ export class PromptComponent implements OnInit {
   @Input() showFileUpload?: boolean;
   @Output() onSend: EventEmitter<string> = new EventEmitter();
 
-  constructor(private chat: ChatService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.clearPrompt$.subscribe({

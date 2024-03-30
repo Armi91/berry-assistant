@@ -19,13 +19,14 @@ export class ImageGenerationComponent {
 
   @ViewChild('imagePrev') imagePrev?: Image;
 
-  constructor(protected imagesService: ImagesService, private toastr: ToastrService) {}
+  constructor(
+    protected imagesService: ImagesService,
+    private toastr: ToastrService
+  ) {}
 
   send(prompt: string) {
     this.imagesService.sendDallePrompt(prompt).then((response) => {
       this.isSending$.next(false);
-      // this.clearPrompt$.next(true);
-      // this.clearPrompt$.next(false);
       const data = response?.data as any;
       const image = data?.image;
       if (image) {
@@ -33,7 +34,7 @@ export class ImageGenerationComponent {
         this.myPrompt = prompt;
         this.revisedPrompt = image.data[0].revised_prompt;
       }
-    })
+    });
   }
 
   saveToDatabase() {
@@ -48,7 +49,12 @@ export class ImageGenerationComponent {
     }
 
     const name = autoId();
-    this.imagesService.saveImageToStorage(blob, name, this.myPrompt, this.revisedPrompt);
+    this.imagesService.saveImageToStorage(
+      blob,
+      name,
+      this.myPrompt,
+      this.revisedPrompt
+    );
   }
 
   getImageAsFile(): Blob | undefined {
@@ -63,5 +69,4 @@ export class ImageGenerationComponent {
     }
     return new Blob([ab], { type: 'image/png' });
   }
-
 }

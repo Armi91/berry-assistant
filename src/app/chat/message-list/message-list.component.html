@@ -9,7 +9,6 @@
           <app-message [message]="message"></app-message>
         </li>
       </ng-container>
-      <!-- <ng-container *ngIf="(streamedMessage$ | async)?.streaming"> -->
       <li
         class="flex align-items-center py-4 border-bottom-1 surface-border"
         *ngIf="(streamedMessage$ | async)?.streaming"
@@ -18,7 +17,6 @@
           [streamedMessage]="streamedMessage$"
         ></app-streamed-message>
       </li>
-      <!-- </ng-container> -->
     </ul>
   </div>
 </div>

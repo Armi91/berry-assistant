@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, take } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Chat } from '../_models/chat';
 import { ChatService } from '../_services/chat.service';
 
@@ -17,8 +17,6 @@ import { ChatService } from '../_services/chat.service';
   ],
 })
 export class ChatComponent {
-  // TODO: delete empty chats
-
   @ViewChild('scrollWindow') scrollWindow?: ElementRef;
   chatId?: string;
   isSending$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -34,15 +32,13 @@ export class ChatComponent {
         }
       },
     });
-
-    // this.chat.getModelsList();
   }
 
   send(prompt: string) {
     let messageContent = '';
     this.chat.sendPrompt(prompt, this.chatId!).subscribe({
       next: (data: any) => {
-        if (data?.delta?.content) {
+        if (data?.delta?.content && typeof data.delta.content === 'string') {
           messageContent += data.delta.content;
           this.streamedMessage$.next({
             content: messageContent,

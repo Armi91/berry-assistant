@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'u/chat',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'u',
@@ -16,22 +16,26 @@ const routes: Routes = [
     children: [
       {
         path: 'chat',
-        loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule)
+        loadChildren: () =>
+          import('./chat/chat.module').then((m) => m.ChatModule),
       },
       {
         path: 'images',
-        loadChildren: () => import('./image-generation/image-generation.module').then(m => m.ImageGenerationModule)
-      }
-    ]
+        loadChildren: () =>
+          import('./image-generation/image-generation.module').then(
+            (m) => m.ImageGenerationModule
+          ),
+      },
+    ],
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-  }
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

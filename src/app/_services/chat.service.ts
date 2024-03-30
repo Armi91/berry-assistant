@@ -1,34 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import {
-  DocumentReference,
   Firestore,
-  Timestamp,
   collection,
   collectionData,
-  deleteDoc,
-  doc,
-  docData,
-  getDocs,
   query,
-  setDoc,
   where,
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
-import {
-  BehaviorSubject,
-  Observable,
-  catchError,
-  firstValueFrom,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of, switchMap } from 'rxjs';
 import { Chat, Message } from '../_models/chat';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { autoId } from '../_helpers/autoID';
-import { Model } from '../_models/model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -61,7 +44,6 @@ export class ChatService {
     this.api.post<{ chatId: string }>('chat/create', { model }).subscribe({
       next: ({ chatId }) => {
         this.router.navigate(['/u/chat', chatId]);
-        // this.getChatsList();
       },
       error: (error) => {
         console.error(error);
@@ -115,24 +97,16 @@ export class ChatService {
   }
 
   sendPrompt(prompt: string, chatId: string, model?: string, url?: string) {
-    // const body: any = {
-    //   prompt,
-    //   chatId,
-    //   model,
-    // };
-    // if (url) {
-    //   body['pdf_link'] = url;
-    // }
-
     const currentChat = this._currentChat.getValue();
     currentChat?.messages.push({
       role: 'user',
       content: prompt,
     });
     this._currentChat.next(currentChat);
-
     this.api
-      .post(`chat/${chatId}/prompt`, { prompt })
+      .post(`chat/${currentChat?.threadId ? 'thread/' : ''}${chatId}/prompt`, {
+        prompt,
+      })
       .pipe(
         catchError((error) => {
           console.error(error);
@@ -142,7 +116,7 @@ export class ChatService {
       )
       .subscribe();
 
-    return this.createEventSource(chatId);
+    return this.createEventSource(chatId, !!currentChat?.threadId);
   }
 
   getChatsList() {
@@ -159,17 +133,6 @@ export class ChatService {
     );
   }
 
-  getModelsList() {
-    // return this.api.get<Model[]>('models');
-    this.api
-      .callFunction('models')
-      .then((models) => {})
-      .catch((error) => {
-        console.error(error);
-        this.toastr.error(error.message, 'Nie udało się pobrać listy modeli');
-      });
-  }
-
   updateChatName(chatId: string, prompt: string, answer: string) {
     const messages = [
       {
@@ -182,26 +145,21 @@ export class ChatService {
       },
     ];
     this.api.put(`chat/${chatId}`, { messages }).subscribe();
-    // this.api
-    //   .callFunction('updatechatname', { chatId, prompt })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
   }
 
   createDalleImage(prompt: string) {
     return this.api.callFunction('dalle', { prompt });
   }
 
-  createEventSource(chatId: string) {
+  createEventSource(chatId: string, isThread: boolean) {
     if (this.eventSource?.OPEN) {
       this.eventSource.close();
     }
     this.eventSource = new EventSource(
-      `${environment.apiUrl}chat/${chatId}/stream`
+      `${environment.apiUrl}chat/${isThread ? 'thread/' : ''}${chatId}/stream`
     );
     return new Observable((observer) => {
-      this.eventSource!.addEventListener('chat.completion.chunk', (event) => {
+      this.eventSource!.addEventListener(chatId, (event) => {
         const messageData = JSON.parse(event.data);
         observer.next(messageData);
         if (messageData.finish_reason === 'stop') {
@@ -219,7 +177,7 @@ export class ChatService {
   }
 
   private _parsePropmpt(prompt: string) {
-    // TODO: parse prompt
+    // TODO: Parse prompt for some commands
     return prompt;
   }
 }

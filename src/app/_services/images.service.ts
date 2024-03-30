@@ -2,7 +2,15 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { ToastrService } from 'ngx-toastr';
 import { StorageService } from './storage.service';
-import { Firestore, Timestamp, collection, collectionData, doc, query, setDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  Timestamp,
+  collection,
+  collectionData,
+  doc,
+  query,
+  setDoc,
+} from '@angular/fire/firestore';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { AuthService } from './auth.service';
 import { StorageReference, getDownloadURL } from '@angular/fire/storage';
@@ -14,9 +22,7 @@ import { GeneratedImage } from '../_models/GeneratedImage';
 })
 export class ImagesService {
   save(imageLink: string) {
-    this.api
-      .callFunction('saveimage', { imageLink })
-      .then((response) => {});
+    this.api.callFunction('saveimage', { imageLink }).then((response) => {});
   }
   isUploading$ = new BehaviorSubject<boolean>(false);
 
@@ -55,7 +61,7 @@ export class ImagesService {
           uid,
           url,
           createdAt: Timestamp.now(),
-        }).then((x) => {})
+        }).then((x) => {});
         this.toastr.success('Zapisano obraz', 'Sukces');
         this.isUploading$.next(false);
         return new Promise((resolve) => resolve(true));
@@ -90,12 +96,15 @@ export class ImagesService {
         this.isUploading$.next(false);
       },
       async () => {
-        const imageSaved = await this.saveImageToDatabase(name, prompt, revisedPrompt, ref);
+        const imageSaved = await this.saveImageToDatabase(
+          name,
+          prompt,
+          revisedPrompt,
+          ref
+        );
         if (imageSaved) {
           this.isUploading$.next(false);
-          this.toastr.success('Zapisano obraz', 'OK', {timeOut: 5000});
-          console.log({imageSaved});
-
+          this.toastr.success('Zapisano obraz', 'OK', { timeOut: 5000 });
         }
       }
     );
@@ -103,10 +112,8 @@ export class ImagesService {
 
   getFileFromUrl(url: string) {
     this.http.get(url, { responseType: 'blob' }).subscribe({
-      next: (blob) => {
-        console.log(blob);
-      }
-    })
+      next: (blob) => {},
+    });
   }
 
   async getSavedImages(): Promise<GeneratedImage[]> {

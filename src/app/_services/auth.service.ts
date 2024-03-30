@@ -5,11 +5,9 @@ import {
   authState,
   signInWithEmailAndPassword,
   signInWithPopup,
-  signInWithRedirect,
   signOut,
 } from '@angular/fire/auth';
 import {
-  DocumentData,
   Firestore,
   doc,
   docData,
@@ -41,10 +39,6 @@ export class AuthService {
     return authState(this.auth).pipe(
       switchMap((userCreds) => {
         if (userCreds) {
-          // userCreds.getIdToken().then((token) => {
-          //   console.log(token);
-          // });
-
           return <Observable<User>>(
             docData(doc(this.firestore, `users/${userCreds.uid}`))
           );

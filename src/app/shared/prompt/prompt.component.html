@@ -17,8 +17,6 @@
         (keyup.enter)="send()"
         disabled="{{ isSending$ | async }}"
       ></textarea>
-      <!-- TODO: Menu w popupie -->
-      <!-- <i class="pi pi-plus cursor-pointer extras"></i> -->
       <i
         *ngIf="!(isSending$ | async)"
         class="pi pi-send cursor-pointer"

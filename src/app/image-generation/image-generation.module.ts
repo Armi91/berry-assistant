@@ -7,10 +7,6 @@ import { ImageGenerationRoutingModule } from './image-generation-routing.module'
 
 @NgModule({
   declarations: [ImageGenerationComponent, ImageListComponent],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ImageGenerationRoutingModule
-  ]
+  imports: [CommonModule, SharedModule, ImageGenerationRoutingModule],
 })
-export class ImageGenerationModule { }
+export class ImageGenerationModule {}

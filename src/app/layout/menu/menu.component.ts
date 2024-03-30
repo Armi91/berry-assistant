@@ -61,8 +61,7 @@ export class MenuComponent implements OnInit {
 
   constructor(
     protected layoutService: LayoutService,
-    private chat: ChatService,
-    private cd: ChangeDetectorRef
+    private chat: ChatService
   ) {}
 
   ngOnInit(): void {
@@ -85,12 +84,6 @@ export class MenuComponent implements OnInit {
             (a.createdAt as Timestamp).seconds
           );
         });
-        // this.model[1].items = chatsHistory;
-        // const x = chatsHistory.map((chat) => ({
-        //   name: chat.label,
-        //   createdAt: chat.createdAt as Timestamp,
-        // }));
-        // console.log(x);
       },
     });
   }
